@@ -169,22 +169,25 @@ fun LoginScreen(navController: NavController) { // Recibe NavController
 // 2. ESTRUCTURA DE LA PANTALLA PRINCIPAL (CON BOTTOM BAR)
 @Composable
 fun MainScreen() {
-    val navController = rememberNavController()
+    val navController = rememberNavController() // NavController para la BottomBar y su NavHost interno
     Scaffold(
         bottomBar = { BottomNavigationBar(navController = navController) }
-    ) { paddingValues ->
+    ) { innerPadding -> // Este padding es para la BottomNavigationBar
         NavHost(
             navController = navController,
-            startDestination = "home",
-            modifier = Modifier.padding(paddingValues)
+            startDestination = "home", // O la que prefieras como inicio de esta sección
+            modifier = Modifier.padding(innerPadding) // ¡Crucial para que la BottomBar no tape el contenido!
         ) {
             composable("home") { HomeScreen() }
+            composable("citas") { MisCitasScreen() }
             // ---- ACTUALIZACIÓN AQUÍ ----
-            composable("citas") {
-                MisCitasScreen() // Llama directamente a la función
+            composable("turnos") {
+                com.example.nexoapp.MisTurnosScreen() // Llama a la nueva pantalla de turnos.
+                // Asegúrate que el import sea correcto si lo pusiste
+                // en el paquete com.example.nexoapp directamente.
+                // Si Android Studio no lo auto-importa, añádelo manualmente.
             }
             // ---- FIN DE ACTUALIZACIÓN ----
-            composable("turnos") { PlaceholderScreen("Turnos") }
             composable("notificaciones") { PlaceholderScreen("Notificaciones") }
             composable("perfil") { PlaceholderScreen("Perfil") }
         }
