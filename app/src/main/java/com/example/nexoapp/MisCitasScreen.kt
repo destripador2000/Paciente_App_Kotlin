@@ -1,4 +1,4 @@
-package com.example.nexoapp // Asegúrate que este sea tu paquete principal
+package com.example.nexoapp.com.example.nexoapp // Asegúrate que este sea tu paquete principal
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,15 +9,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.nexoapp.CitaMedica
+import com.example.nexoapp.EstadoCita
 // No necesitamos importar CitaMedica o EstadoCita con un subpaquete,
 // ya que estarán en el mismo paquete com.example.nexoapp
-// import com.example.nexoapp.CitaMedica // Ya no es necesario si está en el mismo paquete
-// import com.example.nexoapp.EstadoCita // Ya no es necesario si está en el mismo paquete
+// import com.example.nexoapp.com.example.nexoapp.CitaMedica // Ya no es necesario si está en el mismo paquete
+// import com.example.nexoapp.com.example.nexoapp.EstadoCita // Ya no es necesario si está en el mismo paquete
 import com.example.nexoapp.ui.theme.NexoAppTheme // Asumiendo que tu tema está aquí
 
 @OptIn(ExperimentalMaterial3Api::class)
