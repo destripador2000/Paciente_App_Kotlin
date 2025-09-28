@@ -102,7 +102,7 @@ fun WelcomeScreen(navController: NavController) { // Recibe el NavController com
         Spacer(modifier = Modifier.weight(1f))
         Button(
             // Al hacer clic, navega a la pantalla "login".
-            onClick = { navController.navigate("login") },
+            onClick = { navController.run { navigate("MainScreen") } },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
