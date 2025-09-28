@@ -172,22 +172,23 @@ fun MainScreen() {
     Scaffold(
         bottomBar = { BottomNavigationBar(navController = navController) }
     ) { paddingValues ->
-        // NavHost para las pantallas DENTRO de la sección principal (Home, Citas, Turnos, etc.)
         NavHost(
             navController = navController,
             startDestination = "home",
             modifier = Modifier.padding(paddingValues)
         ) {
             composable("home") { HomeScreen() }
-            // Aquí definirías las otras pantallas de la BottomBar
-            composable("citas") { PlaceholderScreen("Citas") }
+            // ---- ACTUALIZACIÓN AQUÍ ----
+            composable("citas") {
+                MisCitasScreen() // Llama directamente a la función
+            }
+            // ---- FIN DE ACTUALIZACIÓN ----
             composable("turnos") { PlaceholderScreen("Turnos") }
             composable("notificaciones") { PlaceholderScreen("Notificaciones") }
             composable("perfil") { PlaceholderScreen("Perfil") }
         }
     }
 }
-
 
 // 3. NUEVA PANTALLA DE INICIO (HOME)
 @OptIn(ExperimentalMaterial3Api::class)
