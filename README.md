@@ -1,8 +1,17 @@
+
 # Documentación del Proyecto Nexo - Aplicación Móvil
 
 ## Descripción General
 
-Nexo es una aplicación móvil desarrollada en Android con Kotlin y Jetpack Compose, diseñada para pacientes del sistema de salud pública de Nicaragua. La aplicación permite a los usuarios gestionar sus citas médicas, ver turnos en tiempo real, recibir notificaciones y acceder a su información personal de manera eficiente.
+Nexo es una aplicación móvil desarrollada en **Android con Kotlin y Jetpack Compose**, diseñada para pacientes del sistema de salud pública de Nicaragua.
+La aplicación permite a los usuarios:
+
+* Gestionar citas médicas
+* Ver turnos en tiempo real
+* Recibir notificaciones
+* Acceder a su información personal de forma segura y eficiente
+
+---
 
 ## Estructura del Proyecto
 
@@ -35,35 +44,118 @@ NexoApp/
 └── gradlew                             # Scripts de Gradle
 ```
 
+---
+
 ## Tecnologías y Versiones
 
-### Versiones Principales
-- **Android Gradle Plugin**: 8.13.0
-- **Kotlin**: 2.2.20
-- **Compile SDK**: 36
-- **Min SDK**: 29 (Android 10)
-- **Target SDK**: 36
-- **Jetpack Compose BOM**: 2025.09.01
+* **Android Gradle Plugin**: 8.13.0
+* **Kotlin**: 2.2.20
+* **Compile SDK**: 36
+* **Min SDK**: 29 (Android 10)
+* **Target SDK**: 36
+* **Jetpack Compose BOM**: 2025.09.01
 
-### Dependencias Principales
-```kotlin
-dependencies {
-    implementation("androidx.compose.material:material-icons-extended:1.6.7")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-    implementation("io.coil-kt:coil-compose:2.5.0")
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.navigation.compose)
-}
+---
+
+## Pasos para Instalar y Ejecutar el Proyecto
+
+### 1. **Requisitos Previos**
+
+Antes de instalar el proyecto, asegúrate de tener lo siguiente:
+
+* [Android Studio Iguana+ (o más reciente)](https://developer.android.com/studio)
+* **JDK 17 o superior**
+* **Gradle** (incluido en el proyecto con `gradlew`)
+* Un **emulador de Android** (API ≥ 29) o un **dispositivo físico con Android 10+**
+* [Git](https://git-scm.com/) para clonar el repositorio
+
+Verifica las versiones instaladas:
+
+```bash
+java -version
+git --version
 ```
+
+---
+
+### 2. **Clonar el Repositorio**
+
+```bash
+git clone https://github.com/destripador2000/Paciente_App_Kotlin.git
+cd Paciente_App_Kotlin
+```
+
+---
+
+### 3. **Abrir el Proyecto en Android Studio**
+
+1. Abre **Android Studio**
+2. Selecciona **File → Open…**
+3. Busca la carpeta clonada (`nexo-app`) y ábrela
+4. Android Studio descargará automáticamente las dependencias y sincronizará el proyecto
+
+---
+
+### 4. **Configurar el SDK y Emulador**
+
+1. Abre **SDK Manager** en Android Studio
+2. Instala el **Android SDK 36 (API Level 36)** y las herramientas de compilación recomendadas
+3. Crea un emulador:
+
+   * **AVD Manager → Create Virtual Device**
+   * Selecciona un dispositivo (por ejemplo, Pixel 6)
+   * Instala la imagen del sistema **Android 13 (API 33)** o superior
+
+---
+
+### 5. **Compilar y Ejecutar la Aplicación**
+
+Desde la terminal del proyecto:
+
+```bash
+# Compilar el proyecto
+./gradlew build
+
+# Ejecutar en un emulador o dispositivo conectado
+./gradlew installDebug
+```
+
+O directamente desde Android Studio:
+
+* Selecciona el emulador o dispositivo físico en la barra superior
+* Haz clic en el botón **Run ▶️**
+
+---
+
+### 6. **Ejecutar Pruebas**
+
+```bash
+# Pruebas locales
+./gradlew test
+
+# Pruebas instrumentadas en dispositivo/emulador
+./gradlew connectedAndroidTest
+```
+
+---
+
+### 7. **Limpieza y Reconstrucción**
+
+Si encuentras errores de build o conflictos:
+
+```bash
+# Limpiar el proyecto
+./gradlew clean
+
+# Reconstruir desde cero
+./gradlew clean build
+```
+
+---
 
 ## Arquitectura y Navegación
 
-### Sistema de Navegación
-La aplicación utiliza Navigation Compose con la siguiente estructura:
+La app utiliza **Navigation Compose** con la siguiente estructura:
 
 ```
 WelcomeScreen
@@ -78,149 +170,17 @@ MainScreen (con BottomNavigationBar)
     └── Perfil (Placeholder)
 ```
 
-### Componentes Principales
-
-#### 1. **Principal.kt** - Navegación Principal
-```kotlin
-@Composable
-fun PrincipalAppNavigation() {
-    val navController = rememberNavController()
-    NavHost(navController, startDestination = "welcome") {
-        composable("welcome") { PrincipalWelcomeScreen(navController) }
-        composable("login") { LoginScreen(navController) }
-        composable("main") { MainScreen() }
-    }
-}
-```
-
-#### 2. **MainScreen.kt** - Pantalla Principal con Bottom Navigation
-```kotlin
-@Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = { BottomNavigationBar(navController) }
-    ) { innerPadding ->
-        NavHost(navController, "home") {
-            composable("home") { HomeScreen() }
-            composable("citas") { MisCitasScreen() }
-            composable("turnos") { MisTurnosScreen() }
-            composable("notificaciones") { NotificacionesScreen() }
-            composable("perfil") { PlaceholderScreen("Perfil") }
-        }
-    }
-}
-```
-
-## Pantallas y Funcionalidades
-
-### 1. **Pantalla de Bienvenida (WelcomeScreen)**
-- Presentación de la aplicación
-- Ilustración de hospital
-- Botón de inicio de sesión
-- Opción de registro
-
-### 2. **Pantalla de Login (LoginScreen)**
-- Campos para correo/cédula y contraseña
-- Validación básica de formularios
-- Opción de recuperación de contraseña
-- Navegación a pantalla principal
-
-### 3. **Pantalla de Inicio (HomeScreen)**
-- Saludo personalizado al usuario
-- Perfil del paciente
-- Acciones rápidas (citas, resultados, notificaciones)
-- Actividad reciente
-
-### 4. **Gestión de Citas (MisCitasScreen)**
-- Lista de citas médicas con estados
-- Información detallada (doctor, especialidad, fecha, hora)
-- Estados: CONFIRMADA, PENDIENTE, CANCELADA
-- Funcionalidad de recordatorios
-
-### 5. **Sistema de Turnos (MisTurnosScreen)**
-- Número actual de turno
-- Posición del usuario en la cola
-- Tiempo estimado de espera
-- Consejos para pacientes
-
-### 6. **Notificaciones (NotificacionesScreen)**
-- Lista de notificaciones organizadas
-- Diferentes tipos: resultados, recordatorios, mensajes
-- Icono de ajustes para configuración
-
-## Modelos de Datos
-
-### Cita Médica
-```kotlin
-data class CitaMedica(
-    val id: String,
-    val doctorNombre: String,
-    val especialidad: String,
-    val fecha: String,
-    val hora: String,
-    val ubicacion: String,
-    val estado: EstadoCita,
-    val notasAdicionales: String? = null
-)
-
-enum class EstadoCita(val displayName: String, val color: Color) {
-    CONFIRMADA("CONFIRMADA", Color(0xFF4CAF50)),
-    PENDIENTE("PENDIENTE", Color.Gray),
-    CANCELADA("CANCELADA", Color.Red)
-}
-```
-
-### Notificación
-```kotlin
-data class NotificacionItem(
-    val id: String = UUID.randomUUID().toString(),
-    val titulo: String,
-    val subtitulo: String,
-    val tipo: TipoNotificacion = TipoNotificacion.INFO
-)
-
-enum class TipoNotificacion {
-    RESULTADO, RECORDATORIO, MENSAJE, INFO
-}
-```
-
-## Estilos y Temas
-
-### Sistema de Diseño
-- **Tema Principal**: Material Design 3
-- **Colores**: Esquema de colores dinámicos (Android 12+)
-- **Tipografía**: Fuentes predeterminadas del sistema
-- **Iconografía**: Material Icons y recursos personalizados
-
-### Configuración del Tema
-```kotlin
-@Composable
-fun NexoAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
-) {
-    // Implementación del tema con colores dinámicos
-}
-```
+---
 
 ## Configuración de Build
 
-### Gradle Properties
-```properties
-org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
-android.useAndroidX=true
-kotlin.code.style=official
-android.nonTransitiveRClass=true
-```
+En `app/build.gradle.kts`:
 
-### Configuración del Módulo App
 ```kotlin
 android {
     namespace = "com.example.nexoapp"
     compileSdk = 36
-    
+
     defaultConfig {
         applicationId = "com.example.nexoapp"
         minSdk = 29
@@ -228,77 +188,35 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
-    
+
     buildFeatures {
         compose = true
     }
-    
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    
+
     kotlinOptions {
         jvmTarget = "11"
     }
 }
 ```
 
-## Características Técnicas
+---
 
-### 1. **Compatibilidad**
-- Mínimo: Android 10 (API 29)
-- Recomendado: Android 12+ (para colores dinámicos)
+## Comandos Rápidos
 
-### 2. **Arquitectura**
-- Jetpack Compose para UI
-- Navigation Compose para navegación
-- Estado manejado con `mutableStateOf`
-- Arquitectura MVVM implícita
+| Acción                 | Comando                          |
+| ---------------------- | -------------------------------- |
+| Compilar               | `./gradlew build`                |
+| Instalar en emulador   | `./gradlew installDebug`         |
+| Ejecutar pruebas       | `./gradlew test`                 |
+| Pruebas instrumentadas | `./gradlew connectedAndroidTest` |
+| Limpiar proyecto       | `./gradlew clean`                |
+| Reconstrucción total   | `./gradlew clean build`          |
 
-### 3. **Rendimiento**
-- LazyColumn para listas largas
-- Recomposición eficiente
-- Imágenes optimizadas con Coil
+---
 
-### 4. **Accesibilidad**
-- Content descriptions en todos los elementos interactivos
-- Contraste de colores adecuado
-- Tamaños de texto escalables
+## Notas Finales
 
-## Comandos de Desarrollo
-
-### Build y Ejecución
-```bash
-# Instalar dependencias
-./gradlew build
-
-# Ejecutar en emulador/dispositivo
-./gradlew installDebug
-
-# Ejecutar pruebas
-./gradlew test
-./gradlew connectedAndroidTest
-```
-
-### Limpieza
-```bash
-# Limpiar proyecto
-./gradlew clean
-
-# Rebuild completo
-./gradlew clean build
-```
-
-## Estructura de Recursos
-
-### Drawables
-- `hospital_illustration`: Ilustración principal
-- `ic_launcher_foreground/background`: Iconos de la aplicación
-- Recursos adaptativos para diferentes densidades
-
-### Valores
-- `colors.xml`: Paleta de colores legacy
-- `strings.xml`: Cadenas de texto
-- `themes.xml`: Temas XML legacy
+* Se recomienda utilizar un **emulador con Android 13 o superior** para soportar colores dinámicos (Material You).
+* Asegúrate de habilitar la **Depuración USB** si usas un dispositivo físico.
+* El proyecto está listo para escalar y conectarse a APIs REST para datos en tiempo real.
 
